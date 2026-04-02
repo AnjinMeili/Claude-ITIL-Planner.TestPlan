@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMART Disk Health Monitor</title>
+    <style>
+        body {
+            font-family: monospace;
+            font-size: 14px;
+            margin: 2rem;
+            background: #111;
+            color: #ccc;
+        }
+        h1 {
+            color: #eee;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th {
+            text-align: left;
+            padding: 0.4rem 1rem 0.4rem 0;
+            border-bottom: 1px solid #444;
+            color: #888;
+            font-weight: normal;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+        td {
+            padding: 0.35rem 1rem 0.35rem 0;
+            border-bottom: 1px solid #222;
+            vertical-align: top;
+        }
+        tr:hover td {
+            background: #1a1a1a;
+        }
+        .status-passed  { color: #4caf50; }
+        .status-failed  { color: #f44336; font-weight: bold; }
+        .status-unknown { color: #ff9800; }
+        .stale          { color: #666; }
+        .empty          { color: #555; font-style: italic; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <h1>SMART Disk Health Monitor</h1>
+
+    {% if rows %}
+    <table>
+        <thead>
+            <tr>
+                <th>Host</th>
+                <th>Device</th>
+                <th>Type</th>
+                <th>Health</th>
+                <th>Flags Used</th>
+                <th>Collected At (UTC)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row.host_id }}</td>
+                <td>{{ row.device_path }}</td>
+                <td>{{ row.device_type }}</td>
+                <td class="status-{{ row.health_status | lower }}">{{ row.health_status }}</td>
+                <td>{{ row.smart_flags_used if row.smart_flags_used else '—' }}</td>
+                <td>{{ row.collected_at.strftime('%Y-%m-%d %H:%M:%S UTC') if row.collected_at else '—' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty">No data yet. Deploy an agent and wait for the first collection cycle.</p>
+    {% endif %}
+</body>
+</html>

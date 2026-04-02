@@ -1,0 +1,12 @@
+[tool.black]
+line-length = 120
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: requires live system dependencies (lsblk, Postgres, smartctl)"]

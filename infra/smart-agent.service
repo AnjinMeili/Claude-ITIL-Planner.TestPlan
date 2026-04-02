@@ -1,0 +1,17 @@
+[Unit]
+Description=SMART Disk Health Monitor — collection agent
+After=network.target
+
+[Service]
+Type=simple
+User=smartmon
+EnvironmentFile=/opt/smart-agent/.env
+WorkingDirectory=/opt/smart-agent
+ExecStart=/usr/bin/python3 -m agent
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
