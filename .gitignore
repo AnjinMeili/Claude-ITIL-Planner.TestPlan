@@ -8,3 +8,7 @@ __pycache__/
 dist/
 build/
 .DS_Store
+
+# Keep workspace metadata in source control
+!.claude/
+!.claude/**
