@@ -12,3 +12,11 @@ build/
 # Keep workspace metadata in source control
 !.claude/
 !.claude/**
+!.github/
+!.github/**
+!.ohmy/
+!.ohmy/**
+!.sisyphus/
+!.sisyphus/**
+!copilot-agent-harness/
+!copilot-agent-harness/**
